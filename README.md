@@ -158,8 +158,161 @@ Visualizar painéis no APM e Logs.
 
 #### Grafana
 Instalar Grafana via Helm.
+
 Configurar o Prometheus como data source.
+
 Importar dashboards via JSON (OpenTelemetry, Kubernetes, App).
+
+1. Dashboard OpenTelemetry (Traces)
+otel-traces-dashboard.json:
+~~~
+{
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Active Spans",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "otel_distribution_count{job=\"otelcol\",span_status_code=\"OK\"}",
+          "legendFormat": "OK spans",
+          "refId": "A"
+        }
+      ],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 2,
+      "title": "Latency (p95)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(otel_exporter_latency_bucket[5m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "B"
+        }
+      ],
+      "datasource": "Prometheus"
+    }
+  ],
+  "schemaVersion": 36,
+  "title": "OpenTelemetry Traces",
+  "uid": "otel-traces"
+}
+
+~~~
+
+2. Dashboard Kubernetes (Cluster Metrics)
+k8s-cluster-dashboard.json:
+~~~
+{
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "id": 1,
+      "title": "CPU Usage",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\",container!=\"POD\"}[5m])) by (pod)",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 2,
+      "title": "Memory Usage",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(container_memory_usage_bytes{image!=\"\",container!=\"POD\"}) by (pod)",
+          "legendFormat": "{{pod}}",
+          "refId": "B"
+        }
+      ],
+      "datasource": "Prometheus"
+    }
+  ],
+  "schemaVersion": 36,
+  "title": "Kubernetes Cluster",
+  "uid": "k8s-cluster"
+}
+
+~~~
+
+3. Dashboard da Aplicação (Métricas de Request)
+app-metrics-dashboard.json:
+~~~
+{
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "id": 1,
+      "title": "HTTP Requests per Second",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count[1m])) by (method)",
+          "legendFormat": "{{method}}",
+          "refId": "A"
+        }
+      ],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 2,
+      "title": "Error Rate (5xx)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count{status=~\"5..\"}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) * 100",
+          "legendFormat": "5xx %",
+          "refId": "B"
+        }
+      ],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 3,
+      "title": "Latency (p95)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_server_requests_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "C"
+        }
+      ],
+      "datasource": "Prometheus"
+    }
+  ],
+  "schemaVersion": 36,
+  "title": "App Metrics",
+  "uid": "app-metrics"
+}
+
+~~~
+
+#### Como usar
+Abra o Grafana e vá em "Create" → "Import".
+
+Cole o conteúdo de cada arquivo JSON ou selecione o arquivo.
+
+Selecione a mesma fonte de dados Prometheus usada no seu cluster.
+
+Esses dashboards fornecem um bom ponto de partida para:
+
+Traces (OpenTelemetry)
+
+Recursos do cluster (CPU / RAM)
+
+Métricas de aplicação (requests, erros, latência)
+
 
 ### 7. Documento Final
 Diagrama de Arquitetura
