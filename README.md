@@ -164,7 +164,7 @@ GitHub → Actions → ECR → GitOps repo
 ArgoCD → EKS → Helm
 OpenTelemetry → Collector → Datadog/Grafana
 
-![Arquitetura]([arquitetura.png](https://github.com/ajbatist/itau_sre/blob/main/docs/arquitetura/arquitetura.png))
+![Arquitetura](https://github.com/ajbatist/itau_sre/blob/main/docs/arquitetura/arquitetura.png)
 
  ### SLIs e SLOs Propostos
 
