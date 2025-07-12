@@ -183,7 +183,9 @@ OpenTelemetry → Collector → Datadog/Grafana
 
  * Usar Argo Rollouts ou Helm com canary:
   ** Dividir o tráfego em 10%, 30%, 100%
+   
 * Healthchecks com readinessProbe/livenessProbe
+  
 * Monitoramento com métricas + rollback automático no ArgoCD
 
 ### Estrutura do Projeto
