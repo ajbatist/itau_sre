@@ -1,0 +1,11 @@
+image:
+  repository: <ECR_REPO_URI>/app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false

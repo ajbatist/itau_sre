@@ -1,0 +1,37 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam arrowColor #336699
+skinparam backgroundColor #F9F9F9
+
+actor Dev as "Developer"
+
+package "GitHub" {
+  component "App Repo" as AppRepo
+  component "GitOps Repo" as GitOpsRepo
+}
+
+component "GitHub Actions\n(CI/CD)" as GitHubActions
+database "Amazon ECR" as ECR
+
+node "Amazon EKS" {
+  component "ArgoCD"
+  component "Helm Chart\n(App)"
+  component "OpenTelemetry\nCollector" as Otel
+  component "App (Pods)"
+}
+
+component "Grafana ou Datadog" as Observabilidade
+
+' Fluxos
+Dev --> AppRepo : Push
+AppRepo --> GitHubActions : CI Trigger
+GitHubActions --> ECR : Build & Push Image
+GitHubActions --> GitOpsRepo : Update Helm values.yaml
+
+GitOpsRepo --> ArgoCD : Sync via GitOps
+ArgoCD --> "App (Pods)" : Deploy Helm Chart
+"Helm Chart" --> "App (Pods)" 
+"App (Pods)" --> Otel : Traces/Metrics
+Otel --> Observabilidade
+
+@enduml
