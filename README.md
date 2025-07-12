@@ -12,7 +12,7 @@
     Usar o módulo oficial: terraform-aws-modules/eks
     Configurar roles, security groups e outputs.
 
-ˋˋˋ
+~~~
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "app-cluster"
@@ -20,7 +20,7 @@ module "eks" {
   subnets         = module.vpc.private_subnets
   vpc_id          = module.vpc.vpc_id
 }
-ˋˋˋ
+~~~
 
 Comandos:
 bash
