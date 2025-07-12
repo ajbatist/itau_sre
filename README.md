@@ -180,5 +180,37 @@ OpenTelemetry → Collector → Datadog/Grafana
 * Healthchecks com readinessProbe/livenessProbe
 * Monitoramento com métricas + rollback automático no ArgoCD
 
+### Estrutura do Projeto
+
+infra/
+  └── terraform/
+      ├── main.tf
+      ├── variables.tf
+      └── outputs.tf
+
+k8s/
+  └── helm/
+      └── app/
+          ├── Chart.yaml
+          ├── values.yaml
+          └── templates/
+              ├── deployment.yaml
+              ├── service.yaml
+              └── ingress.yaml
+
+.github/
+  └── workflows/
+      └── deploy.yml
+
+otel/
+  └── collector-config.yaml
+
+docs/
+  ├── arquitetura.png
+  └── README.md
+
+Instalar com Helm:
+bash
+helm install otel open-telemetry/opentelemetry-collector   -f otel/collector-config.yaml
 
 
