@@ -24,9 +24,12 @@ module "eks" {
 
 Comandos:
 bash
+~~~
 terraform init
 terraform apply
 aws eks --region us-east-1 update-kubeconfig --name app-cluster
+~~~
+
 
 ### 2. Instalar e Configurar ArgoCD
 
