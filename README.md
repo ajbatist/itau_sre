@@ -1,5 +1,5 @@
-# itau_sre
-## POC Itau SRE
+# Rede SRE
+## POC Rede SRE
 ### 1. Provisionar Cluster EKS com Terraform
 
    Ferramentas necessárias:
