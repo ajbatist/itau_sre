@@ -65,7 +65,8 @@ spec:
 
 ### 3. Criar Helm Chart da Aplicação
 Estrutura do chart:
-bash
+
+yaml
 ~~~
 helm/app/
 ├── Chart.yaml
@@ -78,6 +79,7 @@ helm/app/
 ~~~
 
 Exemplo values.yaml:
+
 yaml
 ~~~
 image:
@@ -90,6 +92,7 @@ service:
 
  ### 4. Criar Pipeline GitHub Actions
 .github/workflows/deploy.yml
+
 yaml
 ~~~
 name: CI/CD
