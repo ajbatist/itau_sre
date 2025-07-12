@@ -159,10 +159,12 @@ Importar dashboards via JSON (OpenTelemetry, Kubernetes, App).
 
 ### 7. Documento Final
 Diagrama de Arquitetura
-Pode ser feito com Lucidchart, draw.io, ou PlantUML. O diagrama deve incluir:
+O diagrama deve incluir:
 GitHub → Actions → ECR → GitOps repo
 ArgoCD → EKS → Helm
 OpenTelemetry → Collector → Datadog/Grafana
+
+![Arquitetura](arquitetura.png)
 
  ### SLIs e SLOs Propostos
 
@@ -181,7 +183,7 @@ OpenTelemetry → Collector → Datadog/Grafana
 * Monitoramento com métricas + rollback automático no ArgoCD
 
 ### Estrutura do Projeto
-
+~~~
 infra/
   └── terraform/
       ├── main.tf
@@ -206,8 +208,9 @@ otel/
   └── collector-config.yaml
 
 docs/
-  ├── arquitetura.png
-  └── README.md
+  └── arquitetura.png
+
+~~~
 
 Instalar com Helm:
 bash
