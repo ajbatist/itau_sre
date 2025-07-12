@@ -37,6 +37,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 2- Expor o ArgoCD com LoadBalancer ou Ingress.
+
 3- Configurar um Application apontando para o repositório GitOps:
 ~~~
 apiVersion: argoproj.io/v1alpha1
