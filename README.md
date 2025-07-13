@@ -35,8 +35,11 @@ aws eks --region us-east-1 update-kubeconfig --name app-cluster
 
 Passos:
 1- Aplicar o manifest oficial:
+
 bash
+
 kubectl create namespace argocd
+
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 2- Expor o ArgoCD com LoadBalancer ou Ingress.
